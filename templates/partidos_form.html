@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Registrar Partido</h2>
+<form method="post" action="/partidos/nuevo">
+    <label>Fecha:</label><input type="date" name="fecha"><br>
+    <label>Rival:</label><input name="rival"><br>
+    <label>¿Es local?</label>
+    <select name="es_local">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+    </select><br>
+    <label>Goles Sigomota:</label><input type="number" name="goles_sigomota" value="0"><br>
+    <label>Goles Rival:</label><input type="number" name="goles_rival" value="0"><br>
+    <label>Resultado:</label>
+    <select name="resultado">
+        <option value="victoria">Victoria</option>
+        <option value="empate">Empate</option>
+        <option value="derrota">Derrota</option>
+    </select><br>
+    <label>¿Resuelto por penales?</label>
+    <select name="resuelto_por_penales">
+        <option value="false">No</option>
+        <option value="true">Sí</option>
+    </select><br>
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

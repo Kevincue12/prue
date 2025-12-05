@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Partidos</h2>
+<a href="/partidos/nuevo">Registrar nuevo partido</a>
+<table border="1" cellpadding="4">
+    <tr>
+        <th>ID</th><th>Fecha</th><th>Rival</th><th>Local</th><th>Marcador</th><th>Resultado</th>
+    </tr>
+    {% for p in partidos %}
+    <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.fecha }}</td>
+        <td>{{ p.rival }}</td>
+        <td>{{ "Local" if p.es_local else "Visitante" }}</td>
+        <td>{{ p.goles_sigomota }} - {{ p.goles_rival }}</td>
+        <td>{{ p.resultado.value }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
