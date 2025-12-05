@@ -97,4 +97,12 @@ class EstadisticaJugador(Base):
     jugador_id = Column(Integer, ForeignKey("jugadores.id"))
     partido_id = Column(Integer, ForeignKey("partidos.id"))
 
-    minutos_jugados = Column(Integer, default=0_
+    minutos_jugados = Column(Integer, default=0)
+    goles_marcados = Column(Integer, default=0)
+    asistencias = Column(Integer, default=0)
+    tarjetas_amarillas = Column(Integer, default=0)
+    tarjetas_rojas = Column(Integer, default=0)
+
+    jugador = relationship("Jugador", back_populates="estadisticas")
+    partido = relationship("Partido", back_populates="estadisticas")
+
