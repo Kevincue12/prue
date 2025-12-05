@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
-from typing import Optional, List
+from typing import Optional
 
 # Importar los ENUMS desde models
 from models import (
@@ -11,7 +11,9 @@ from models import (
 )
 
 
-# ==== ESTADISTICA ====
+# ==============================
+#        🎯 ESTADISTICA
+# ==============================
 
 class EstadisticaBase(BaseModel):
     minutos_jugados: int = 0
@@ -34,7 +36,9 @@ class Estadistica(EstadisticaBase):
     model_config = {"from_attributes": True}
 
 
-# ==== JUGADOR ====
+# ==============================
+#        👟 JUGADOR
+# ==============================
 
 class JugadorBase(BaseModel):
     nombre: str
@@ -64,7 +68,9 @@ class Jugador(JugadorBase):
     model_config = {"from_attributes": True}
 
 
-# ==== PARTIDO ====
+# ==============================
+#        ⚽ PARTIDO
+# ==============================
 
 class PartidoBase(BaseModel):
     fecha: date
@@ -72,8 +78,6 @@ class PartidoBase(BaseModel):
     es_local: bool = True
     goles_sigomota: int = 0
     goles_rival: int = 0
-    resultado: ResultadoPartido
-    resuelto_por_penales: bool = False
 
 
 class PartidoCreate(PartidoBase):
@@ -82,11 +86,14 @@ class PartidoCreate(PartidoBase):
 
 class Partido(PartidoBase):
     id: int
+    resultado: ResultadoPartido
 
     model_config = {"from_attributes": True}
 
 
-# ==== RESPUESTAS COMPUESTAS ====
+# ==============================
+#        🔍 RESPUESTAS
+# ==============================
 
 class EstadisticaDetallada(Estadistica):
     jugador: Jugador

@@ -8,7 +8,9 @@ from datetime import date
 import enum
 
 
-# ==== ENUMS ====
+# ==============================
+#         🎯 ENUMS
+# ==============================
 
 class EstadoJugador(str, enum.Enum):
     activo = "Activo"
@@ -39,7 +41,9 @@ class ResultadoPartido(str, enum.Enum):
     derrota = "derrota"
 
 
-# ==== MODELOS ====
+# ==============================
+#         👟 JUGADOR
+# ==============================
 
 class Jugador(Base):
     __tablename__ = "jugadores"
@@ -50,7 +54,7 @@ class Jugador(Base):
     nacionalidad = Column(String, nullable=False)
     fecha_nacimiento = Column(Date, nullable=False)
 
-    # Datos físicos / deportivos
+    # Datos físicos
     altura_cm = Column(Float, nullable=False)
     peso_kg = Column(Float, nullable=False)
     pie_dominante = Column(Enum(PieDominante), nullable=False)
@@ -61,16 +65,21 @@ class Jugador(Base):
     posicion = Column(Enum(PosicionJugador), nullable=False)
     estado = Column(Enum(EstadoJugador), default=EstadoJugador.activo)
 
-    # Relación con estadísticas por partido
+    # Relación con estadísticas
     estadisticas = relationship("EstadisticaJugador", back_populates="jugador")
 
     @property
     def edad(self):
+        """ Calcula edad exacta según fecha de nacimiento """
         hoy = date.today()
         return hoy.year - self.fecha_nacimiento.year - (
             (hoy.month, hoy.day) < (self.fecha_nacimiento.month, self.fecha_nacimiento.day)
         )
 
+
+# ==============================
+#         ⚽ PARTIDO
+# ==============================
 
 class Partido(Base):
     __tablename__ = "partidos"
@@ -85,10 +94,16 @@ class Partido(Base):
 
     resultado = Column(Enum(ResultadoPartido), nullable=False)
 
+    # ⚠️ Lo dejé porque estaba en tu código
+    # Si lo vas a quitar completamente, dime y te lo limpio del proyecto
     resuelto_por_penales = Column(Boolean, default=False)
 
     estadisticas = relationship("EstadisticaJugador", back_populates="partido")
 
+
+# ==============================
+#      📊 ESTADISTICA JUGADOR
+# ==============================
 
 class EstadisticaJugador(Base):
     __tablename__ = "estadisticas_jugador"
@@ -105,4 +120,3 @@ class EstadisticaJugador(Base):
 
     jugador = relationship("Jugador", back_populates="estadisticas")
     partido = relationship("Partido", back_populates="estadisticas")
-

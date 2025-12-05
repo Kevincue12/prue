@@ -7,9 +7,9 @@ from datetime import date
 from database import Base, engine, get_db
 import crud
 import schemas
-from models import PieDominante, PosicionJugador, EstadoJugador, ResultadoPartido
+from models import PieDominante, PosicionJugador
 
-# Crear tablas en la BD (solo si no existen)
+# Crear tablas si no existen
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Sigomota FC - Gestión de jugadores y partidos")
@@ -72,7 +72,6 @@ def crear_jugador_html(
         peso_kg=peso_kg,
         pie_dominante=PieDominante[pie_dominante],
         posicion=PosicionJugador[posicion],
-        estado=EstadoJugador.activo
     )
     crud.crear_jugador(db, jugador_in)
     return RedirectResponse(url="/jugadores_page", status_code=303)
@@ -92,8 +91,7 @@ def partidos_form(request: Request):
     return templates.TemplateResponse(
         "partidos_form.html",
         {
-            "request": request,
-            "resultados": list(ResultadoPartido),
+            "request": request
         }
     )
 
@@ -106,8 +104,6 @@ def crear_partido_html(
     es_local: bool = Form(...),
     goles_sigomota: int = Form(0),
     goles_rival: int = Form(0),
-    resultado: str = Form(...),
-    resuelto_por_penales: bool = Form(False),
     db: Session = Depends(get_db),
 ):
     partido_in = schemas.PartidoCreate(
@@ -116,8 +112,6 @@ def crear_partido_html(
         es_local=es_local,
         goles_sigomota=goles_sigomota,
         goles_rival=goles_rival,
-        resultado=ResultadoPartido[resultado],
-        resuelto_por_penales=resuelto_por_penales,
     )
     crud.crear_partido(db, partido_in)
     return RedirectResponse(url="/partidos_page", status_code=303)
@@ -154,7 +148,7 @@ def listar_partidos_api(db: Session = Depends(get_db)):
 
 @app.post("/api/estadisticas", response_model=schemas.Estadistica)
 def crear_estadistica_api(est: schemas.EstadisticaCreate, db: Session = Depends(get_db)):
-        return crud.crear_estadistica(db, est)
+    return crud.crear_estadistica(db, est)
 
 
 @app.get("/api/estadisticas/jugador/{jugador_id}", response_model=list[schemas.Estadistica])
