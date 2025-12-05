@@ -1,19 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h2>Jugadores</h2>
+
 <a href="/jugadores/nuevo">Registrar nuevo jugador</a>
-<table border="1" cellpadding="4">
+
+<table border="1" cellpadding="6" style="margin-top: 12px;">
     <tr>
-        <th>ID</th><th>Nombre</th><th>Número</th><th>Posición</th><th>Estado</th>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Número</th>
+        <th>Edad</th>
+        <th>Nacionalidad</th>
+        <th>Altura</th>
+        <th>Peso</th>
+        <th>Pie</th>
+        <th>Posición</th>
+        <th>Estado</th>
     </tr>
+
     {% for j in jugadores %}
     <tr>
         <td>{{ j.id }}</td>
         <td>{{ j.nombre }}</td>
         <td>{{ j.numero_camiseta }}</td>
+        <td>{{ j.edad }}</td>
+        <td>{{ j.nacionalidad }}</td>
+        <td>{{ j.altura_cm }} cm</td>
+        <td>{{ j.peso_kg }} kg</td>
+        <td>{{ j.pie_dominante.value }}</td>
         <td>{{ j.posicion.value }}</td>
         <td>{{ j.estado.value }}</td>
     </tr>
     {% endfor %}
 </table>
+
 {% endblock %}

@@ -1,28 +1,14 @@
 from pydantic import BaseModel
 from datetime import date
 from typing import Optional, List
-import enum
 
-
-# ==== ENUMS (API) ====
-
-class EstadoJugadorAPI(str, enum.Enum):
-    activo = "activo"
-    lesionado = "lesionado"
-    suspendido = "suspendido"
-
-
-class PosicionJugadorAPI(str, enum.Enum):
-    portero = "portero"
-    defensa = "defensa"
-    medio = "medio"
-    delantero = "delantero"
-
-
-class ResultadoPartidoAPI(str, enum.Enum):
-    victoria = "victoria"
-    empate = "empate"
-    derrota = "derrota"
+# Importar los ENUMS desde models
+from models import (
+    PieDominante,
+    PosicionJugador,
+    EstadoJugador,
+    ResultadoPartido
+)
 
 
 # ==== ESTADISTICA ====
@@ -55,11 +41,14 @@ class JugadorBase(BaseModel):
     numero_camiseta: int
     nacionalidad: str
     fecha_nacimiento: date
+
     altura_cm: float
     peso_kg: float
-    pie_dominante: str
-    posicion: PosicionJugadorAPI
-    estado: EstadoJugadorAPI = EstadoJugadorAPI.activo
+
+    pie_dominante: PieDominante
+    posicion: PosicionJugador
+    estado: EstadoJugador = EstadoJugador.activo
+
     velocidad: Optional[float] = None
     resistencia: Optional[float] = None
 
@@ -70,6 +59,7 @@ class JugadorCreate(JugadorBase):
 
 class Jugador(JugadorBase):
     id: int
+    edad: int
 
     model_config = {"from_attributes": True}
 
@@ -82,7 +72,7 @@ class PartidoBase(BaseModel):
     es_local: bool = True
     goles_sigomota: int = 0
     goles_rival: int = 0
-    resultado: ResultadoPartidoAPI
+    resultado: ResultadoPartido
     resuelto_por_penales: bool = False
 
 

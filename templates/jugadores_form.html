@@ -1,21 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h2>Registrar Jugador</h2>
+
 <form method="post" action="/jugadores/nuevo">
-    <label>Nombre:</label><input name="nombre"><br>
-    <label>Número camiseta:</label><input type="number" name="numero_camiseta"><br>
-    <label>Nacionalidad:</label><input name="nacionalidad"><br>
-    <label>Fecha nacimiento:</label><input type="date" name="fecha_nacimiento"><br>
-    <label>Altura (cm):</label><input type="number" step="0.1" name="altura_cm"><br>
-    <label>Peso (kg):</label><input type="number" step="0.1" name="peso_kg"><br>
-    <label>Pie dominante:</label><input name="pie_dominante"><br>
-    <label>Posición:</label>
-    <select name="posicion">
-        <option value="portero">Portero</option>
-        <option value="defensa">Defensa</option>
-        <option value="medio">Medio</option>
-        <option value="delantero">Delantero</option>
-    </select><br>
+
+    <label>Nombre:</label><br>
+    <input name="nombre" required><br><br>
+
+    <label>Número camiseta:</label><br>
+    <input type="number" name="numero_camiseta" required><br><br>
+
+    <label>Nacionalidad:</label><br>
+    <input name="nacionalidad" required><br><br>
+
+    <label>Fecha nacimiento:</label><br>
+    <input type="date" name="fecha_nacimiento" required><br><br>
+
+    <label>Altura (cm):</label><br>
+    <input type="number" step="0.1" name="altura_cm" required><br><br>
+
+    <label>Peso (kg):</label><br>
+    <input type="number" step="0.1" name="peso_kg" required><br><br>
+
+    <label>Pie dominante:</label><br>
+    <select name="pie_dominante" required>
+        {% for pie in pies %}
+            <option value="{{ pie.name }}">{{ pie.value }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Posición:</label><br>
+    <select name="posicion" required>
+        {% for pos in posiciones %}
+            <option value="{{ pos.name }}">{{ pos.value }}</option>
+        {% endfor %}
+    </select><br><br>
+
     <button type="submit">Guardar</button>
 </form>
+
 {% endblock %}

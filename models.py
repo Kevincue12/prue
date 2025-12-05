@@ -4,22 +4,33 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from database import Base
+from datetime import date
 import enum
 
 
 # ==== ENUMS ====
 
 class EstadoJugador(str, enum.Enum):
-    activo = "activo"
-    lesionado = "lesionado"
-    suspendido = "suspendido"
+    activo = "Activo"
+    lesionado = "Lesionado"
+    suspendido = "Suspendido"
+
+
+class PieDominante(str, enum.Enum):
+    izquierdo = "Izquierdo"
+    derecho = "Derecho"
 
 
 class PosicionJugador(str, enum.Enum):
-    portero = "portero"
-    defensa = "defensa"
-    medio = "medio"
-    delantero = "delantero"
+    ARQUERO = "Arquero"
+    DEFENSA_C = "Defensa Central"
+    DEFENSA_L = "Defensa Lateral"
+    VOLANTE_D = "Volante Defensivo"
+    VOLANTE_O = "Volante Ofensivo"
+    VOLANTE_C = "Volante Central"
+    VOLANTE_E = "Volante Extremo"
+    DELANTERO_C = "Delantero Central"
+    DELANTERO_P = "Delantero Punta"
 
 
 class ResultadoPartido(str, enum.Enum):
@@ -40,17 +51,25 @@ class Jugador(Base):
     fecha_nacimiento = Column(Date, nullable=False)
 
     # Datos físicos / deportivos
-    altura_cm = Column(Float)      # altura en cm
-    peso_kg = Column(Float)        # peso en kg
-    pie_dominante = Column(String)  # izquierda / derecha
-    velocidad = Column(Float, nullable=True)   # opcional
-    resistencia = Column(Float, nullable=True) # opcional
+    altura_cm = Column(Float, nullable=False)
+    peso_kg = Column(Float, nullable=False)
+    pie_dominante = Column(Enum(PieDominante), nullable=False)
+
+    velocidad = Column(Float, nullable=True)
+    resistencia = Column(Float, nullable=True)
 
     posicion = Column(Enum(PosicionJugador), nullable=False)
     estado = Column(Enum(EstadoJugador), default=EstadoJugador.activo)
 
     # Relación con estadísticas por partido
     estadisticas = relationship("EstadisticaJugador", back_populates="jugador")
+
+    @property
+    def edad(self):
+        hoy = date.today()
+        return hoy.year - self.fecha_nacimiento.year - (
+            (hoy.month, hoy.day) < (self.fecha_nacimiento.month, self.fecha_nacimiento.day)
+        )
 
 
 class Partido(Base):
@@ -78,11 +97,4 @@ class EstadisticaJugador(Base):
     jugador_id = Column(Integer, ForeignKey("jugadores.id"))
     partido_id = Column(Integer, ForeignKey("partidos.id"))
 
-    minutos_jugados = Column(Integer, default=0)
-    goles_marcados = Column(Integer, default=0)
-    asistencias = Column(Integer, default=0)
-    tarjetas_amarillas = Column(Integer, default=0)
-    tarjetas_rojas = Column(Integer, default=0)
-
-    jugador = relationship("Jugador", back_populates="estadisticas")
-    partido = relationship("Partido", back_populates="estadisticas")
+    minutos_jugados = Column(Integer, default=0_
