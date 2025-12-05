@@ -1,19 +1,17 @@
-# Proyecto de Gestión de Jugadores, Partidos y Estadísticas
+# Proyecto de sigmotoaFC
 
 Este proyecto es una API construida en **FastAPI** para administrar jugadores, partidos y estadísticas deportivas. Permite crear, listar, actualizar y eliminar información, así como relacionar jugadores con partidos mediante estadísticas detalladas.
 
 ---
 
-## 🚀 Descripción General
+##  Descripción 
 
-La API gestiona tres entidades principales:
+La API maneja tres entidades principales:
 
-* **Jugadores** → Información personal, física y deportiva.
-* **Partidos** → Datos del encuentro, resultado y contexto.
-* **Estadísticas por partido** → Rendimiento de cada jugador en cada partido.
-
-El sistema soporta operaciones CRUD completas y permite consultar estadísticas por jugador o por partido.
-
+* Jugadores
+* Partidos
+* Estadísticas por partido
+  
 ---
 
 ## 🛠️ Tecnologías Utilizadas
@@ -83,9 +81,9 @@ Luego abre la documentación interactiva:
 
 ---
 
-## 🔥 Mapa de Endpoints
+##  Mapa de Endpoints
 
-### 📌 Jugadores (`/jugadores`)
+###  Jugadores (`/jugadores`)
 
 | Método | Endpoint          | Descripción                |
 | ------ | ----------------- | -------------------------- |
@@ -97,7 +95,7 @@ Luego abre la documentación interactiva:
 
 ---
 
-### 📌 Partidos (`/partidos`)
+###  Partidos (`/partidos`)
 
 | Método | Endpoint         | Descripción            |
 | ------ | ---------------- | ---------------------- |
@@ -109,7 +107,7 @@ Luego abre la documentación interactiva:
 
 ---
 
-### 📌 Estadísticas (`/estadisticas`)
+###  Estadísticas (`/estadisticas`)
 
 | Método | Endpoint                             | Descripción                                    |
 | ------ | ------------------------------------ | ---------------------------------------------- |
@@ -119,7 +117,7 @@ Luego abre la documentación interactiva:
 
 ---
 
-## 📚 Modelos Principales
+##  Modelos Principales
 
 ### Jugador
 
@@ -150,6 +148,7 @@ Luego abre la documentación interactiva:
 
 ---
 
-## 🙌 Autores
-
+## Autores
+* Kevin Cuevas - 67001396
+* Nicole Nieto - 67001296
 Proyecto desarrollado como parte de un módulo académico de desarrollo de software.
