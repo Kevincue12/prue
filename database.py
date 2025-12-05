@@ -5,7 +5,7 @@ import os
 # URL de Clever Cloud (TU BASE)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://uzcwxj3cucywbasjwhmf:0SK9XiT7Fehp8mAoLQiqboHfQTFOGX@b62ldgps597kj8wg8eq2-postgresql.services.clever-cloud.com:5432/b62ldgps597kj8wg8eq2?sslmode=require"
+    "postgresql://utlvcrk2oo2wusguzte5:RnRWR6HcJlVBYlUZDCOy7s9gU2GTeU@brrqzjmolba4h2vq0nct-postgresql.services.clever-cloud.com:5432/brrqzjmolba4h2vq0nct"
 )
 
 # Crear motor con pre_ping
